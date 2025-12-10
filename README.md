@@ -1,4 +1,4 @@
-OGX-Mini
+# OGX-Mini
 
 v1.1.0
 
@@ -6,201 +6,134 @@ v1.1.0
 
 Firmware for the RP2040, capable of emulating gamepads for several game consoles. The firmware comes in many flavors, supported on the Adafruit Feather USB Host board, Pi Pico, Pi Pico 2, Pi Pico W, Pi Pico 2 W, Waveshare RP2040-Zero, Pico/ESP32 hybrid, and a 4-Channel RP2040-Zero setup.
 
-Visit the web app here to change your mappings and deadzone settings. To pair the OGX-Mini with the web app via USB, plug your controller in, then connect it to your PC, hold Start + Left Bumper + Right Bumper to enter web app mode. Click "Connect via USB" in the web app and select the OGX-Mini. You can also pair via Bluetooth, no extra steps are needed in that case.
+[**Visit the web app here**](https://wiredopposite.github.io/OGX-Mini-WebApp/) to change your mappings and deadzone settings. To pair the OGX-Mini with the web app via USB, plug your controller in, then connect it to your PC, hold Start + Left Bumper + Right Bumper to enter web app mode. Click "Connect via USB" in the web app and select the OGX-Mini. You can also pair via Bluetooth, no extra steps are needed in that case.
 
-Supported platforms
+## Supported platforms
 
-Original Xbox
+- Original Xbox
+- Playstation 3
+- Nintendo Switch (docked)
+- XInput (use [**UsbdSecPatch**](https://github.com/InvoxiPlayGames/UsbdSecPatch) for Xbox 360, or select the patch in J-Runner while flashing your NAND)
+- Playstation Classic
+- DInput
 
-Playstation 3
-
-Nintendo Switch (docked)
-
-XInput (use UsbdSecPatch for Xbox 360, or select the patch in J-Runner while flashing your NAND)
-
-Playstation Classic
-
-DInput
-
-Changing platforms
+## Changing platforms
 
 By default the OGX-Mini will emulate an OG Xbox controller, you must hold a button combo for 3 seconds to change which platform you want to play on. Your chosen mode will persist after powering off the device.
 
 Start = Plus (Switch) = Options (Dualsense/DS4)
 
-XInput
-
-Start + Dpad Up
-
-XInput Guitar (Original PS3 Guitar to Xbox 360 Controller)
-
-Start + Dpad Up + A
-
-Original Xbox
-
-Start + Dpad Right
-
-Original Xbox Steel Battalion
-
-Start + Dpad Right + Right Bumper
-
-Original Xbox DVD Remote
-
-Start + Dpad Right + Left Bumper
-
-Switch
-
-Start + Dpad Down
-
-PlayStation 3
-
-Start + Dpad Left
-
-PlayStation Classic
-
-Start + A (Cross for PlayStation and B for Switch gamepads)
-
-Web Application Mode
-
-Start + Left Bumper + Right Bumper
+- XInput
+  - Start + Dpad Up
+- XInput Guitar (Original PS3 Guitar to Xbox 360 Controller)
+  - Start + Dpad Up + A
+- Original Xbox
+  - Start + Dpad Right
+- Original Xbox Steel Battalion
+  - Start + Dpad Right + Right Bumper
+- Original Xbox DVD Remote
+  - Start + Dpad Right + Left Bumper
+- Switch
+  - Start + Dpad Down
+- PlayStation 3
+  - Start + Dpad Left
+- PlayStation Classic
+  - Start + A (Cross for PlayStation and B for Switch gamepads)
+- Web Application Mode
+  - Start + Left Bumper + Right Bumper
 
 After a new mode is stored, the RP2040 will reset itself so you don't need to unplug it.
 
-Supported devices
-Wired controllers
-
-Original Xbox Duke and S
-
-Xbox 360, One, Series, and Elite
-
-Dualshock 3 (PS3)
-
-Dualshock 4 (PS4)
-
-Dualsense (PS5)
-
-Nintendo Switch Pro
-
-Nintendo Switch wired
-
-Nintendo 64 Generic USB
-
-Playstation Classic
-
-Generic DInput
-
-Generic HID (mappings may need to be editted in the web app)
+## Supported devices
+### Wired controllers
+- Original Xbox Duke and S
+- Xbox 360, One, Series, and Elite
+- Dualshock 3 (PS3)
+- Dualshock 4 (PS4)
+- Dualsense (PS5)
+- Nintendo Switch Pro
+- Nintendo Switch wired
+- Nintendo 64 Generic USB
+- Playstation Classic
+- Generic DInput
+- Generic HID (mappings may need to be editted in the web app)
 
 Note: There are some third party controllers that can change their VID/PID, these might not work correctly.
 
-Wireless adapters
+### Wireless adapters
+- Xbox 360 PC adapter (Microsoft or clones)
+- 8Bitdo v1 and v2 Bluetooth adapters (set to XInput mode)
+- Most wireless adapters that present themselves as Switch/XInput/PlayStation controllers should work
 
-Xbox 360 PC adapter (Microsoft or clones)
+### Wireless Bluetooth controllers (Pico W & ESP32)
+**Note:** Bluetooth functionality is in early testing, some may have quirks.
+- Xbox Series, One, and Elite 2
+- Dualshock 3
+- Dualshock 4
+- Dualsense
+- Switch Pro
+- Steam
+- Stadia
+- And more
 
-8Bitdo v1 and v2 Bluetooth adapters (set to XInput mode)
+Please visit [**this page**](https://bluepad32.readthedocs.io/en/latest/supported_gamepads/) for a more comprehensive list of supported controllers and Bluetooth pairing instructions.
 
-Most wireless adapters that present themselves as Switch/XInput/PlayStation controllers should work
+## Features new to v1.1.0 (by Fred)
 
-Wireless Bluetooth controllers (Pico W & ESP32)
+### PS3 Driver Fixes:
+- Fixed a bug that prevented playing Guitar Hero 3 and Gran Turismo 6.
+- Fixed an issue where pressing the Home/Guide button on the controller would trigger multiple phantom inputs. The button now functions correctly.
+- New XInput Guitar Driver:
 
-Note: Bluetooth functionality is in early testing, some may have quirks.
+- Added a new XInput Guitar driver that converts an original PlayStation 3 guitar into a standard Xbox 360 controller. This enables its use on the Xbox 360, which was previously impossible without this driver.
 
-Xbox Series, One, and Elite 2
-
-Dualshock 3
-
-Dualshock 4
-
-Dualsense
-
-Switch Pro
-
-Steam
-
-Stadia
-
-And more
-
-Please visit this page for a more comprehensive list of supported controllers and Bluetooth pairing instructions.
-
-Features new to v1.1.0 (by Fred)
-
-PS3 Driver Fixes:
-
-Fixed a bug that prevented playing Guitar Hero 3 and Gran Turismo 6.
-
-Fixed an issue where pressing the Home/Guide button on the controller would trigger multiple phantom inputs. The button now functions correctly.
-
-New XInput Guitar Driver:
-
-Added a new XInput Guitar driver that converts an original PlayStation 3 guitar into a standard Xbox 360 controller. This enables its use on the Xbox 360, which was previously impossible without this driver.
-
-Build Information:
+## Build Information:
 
 This version was compiled and tested only for the Pi Pico, as it is the only board I currently have available for testing.
 
-XInput Guitar Mapping
-PS3 Guitar	Xbox 360
-Green (BUTTON_A)	LT
-Red (BUTTON_B)	LB
-Yellow (BUTTON_Y)	RT
-Blue (BUTTON_X)	RB
-Orange (BUTTON_LB)	A
-Select	Button Power
-Start	Start
-Known Issues
+### XInput Guitar Mapping
+
+| PS3 Guitar	                | Xbox 360 |
+| --- | --- |
+| Green (BUTTON_A)              | LT |
+| Red (BUTTON_B)                | LB |
+| Yellow (BUTTON_Y)             | RT |
+| Blue (BUTTON_X)               | RB |
+| Orange (BUTTON_LB)            | A |
+| Select                        | Button Power
+| Start	                        | Start
+
+## Known Issues
 
 The issue with phantom inputs has not yet been resolved. It occurs in some games such as God of War 3 (D-pad left and right analog stick up) and GTA 5 (D-pad up).
 
-Features new to v1.0.0
+## Features new to v1.0.0
+- Bluetooth functionality for the Pico W, Pico 2 W, and Pico+ESP32.
+- Web application (connectable via USB or Bluetooth) for configuring deadzones and buttons mappings, supports up to 8 saved profiles.
+- Pi Pico 2 and Pico 2 W (RP2350) support.
+- Reduced latency by about 3-4 ms, graphs showing comparisons are coming.
+- 4 channel functionality, connect 4 Picos and use one Xbox 360 wireless adapter to control all 4.
+- Delayed USB mount until a controller is plugged in, useful for internal installation (non-Bluetooth boards only).
+- Generic HID controller support.
+- Dualshock 3 emulation (minus gyros), rumble now works.
+- Steel Battalion controller emulation with a wireless Xbox 360 chatpad.
+- Xbox DVD dongle emulation. You must provide or dump your own dongle firmware, see the Tools directory.
+- Analog button support on OG Xbox and PS3.
+- RGB LED support for RP2040-Zero and Adafruit Feather boards.
 
-Bluetooth functionality for the Pico W, Pico 2 W, and Pico+ESP32.
+## Planned additions
+- More accurate report parser for unknown HID controllers
+- Hardware design for internal OG Xbox install
+- Hardware design for 4 channel RP2040-Zero adapter
+- Wired Xbox 360 chatpad support
+- Wired Xbox One chatpad support
+- Switch (as input) rumble support
+- OG Xbox communicator support (in some form)
+- Generic bluetooth dongle support
+- Button macros
+- Rumble settings (intensity, enabled/disable, etc.)
 
-Web application (connectable via USB or Bluetooth) for configuring deadzones and buttons mappings, supports up to 8 saved profiles.
-
-Pi Pico 2 and Pico 2 W (RP2350) support.
-
-Reduced latency by about 3-4 ms, graphs showing comparisons are coming.
-
-4 channel functionality, connect 4 Picos and use one Xbox 360 wireless adapter to control all 4.
-
-Delayed USB mount until a controller is plugged in, useful for internal installation (non-Bluetooth boards only).
-
-Generic HID controller support.
-
-Dualshock 3 emulation (minus gyros), rumble now works.
-
-Steel Battalion controller emulation with a wireless Xbox 360 chatpad.
-
-Xbox DVD dongle emulation. You must provide or dump your own dongle firmware, see the Tools directory.
-
-Analog button support on OG Xbox and PS3.
-
-RGB LED support for RP2040-Zero and Adafruit Feather boards.
-
-Planned additions
-
-More accurate report parser for unknown HID controllers
-
-Hardware design for internal OG Xbox install
-
-Hardware design for 4 channel RP2040-Zero adapter
-
-Wired Xbox 360 chatpad support
-
-Wired Xbox One chatpad support
-
-Switch (as input) rumble support
-
-OG Xbox communicator support (in some form)
-
-Generic bluetooth dongle support
-
-Button macros
-
-Rumble settings (intensity, enabled/disable, etc.)
-
-Hardware
+## Hardware
 
 For Pi Pico, RP2040-Zero, 4 channel, and ESP32 configurations, please see the hardware folder for diagrams.
 
@@ -215,46 +148,35 @@ Adding supported controllers
 
 If your third party controller isn't working, but the original version is listed above, send me the device's VID and PID and I'll add it so it's recognized properly.
 
-Build
-RP2040
+## Build
+### RP2040
 
 You can compile this for different boards with the CMake argument OGXM_BOARD while configuring the project.
 
 The options are:
-
-PI_PICO
-
-PI_PICO2
-
-PI_PICOW
-
-PI_PICO2W
-
-RP2040_ZERO
-
-ADAFRUIT_FEATHER
-
-ESP32_BLUEPAD32_I2C- ESP32_BLUERETRO_I2C
-
-EXTERNAL_4CH_I2C
+- PI_PICO
+- PI_PICO2
+- PI_PICOW
+- PI_PICO2W
+- RP2040_ZERO
+- ADAFRUIT_FEATHER
+- ESP32_BLUEPAD32_I2C- ESP32_BLUERETRO_I2C
+- EXTERNAL_4CH_I2C
 
 You can also set MAX_GAMEPADS which, if greater than one, will only support DInput (PS3) and Switch.
 
 You'll need git, python3, CMake, Ninja and the GCC ARM toolchain installed. CMake scripts will patch some files in Bluepad32 and BTStack and also make sure all git submodules (plus their submodules and dependencies) are downloaded. Here's an example on Windows:
 
-code
-Code
-download
-content_copy
-expand_less
+```
 git clone --recursive https://github.com/wiredopposite/OGX-Mini.git
 cd OGX-Mini/Firmware/RP2040
 cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DOGXM_BOARD=PI_PICOW -DMAX_GAMEPADS=1
 cmake --build build
+```
 
 Or just install the GCC ARM toolchain and use the CMake Tools extension in VSCode.
 
-ESP32
+### ESP32
 
 Please see the Hardware directory for a diagram showing how to hookup the ESP32 to your RP2040.
 
