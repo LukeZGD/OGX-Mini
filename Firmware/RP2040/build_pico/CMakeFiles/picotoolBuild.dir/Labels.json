@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/CMakeFiles/picotoolBuild"
+		},
+		{
+			"file" : "F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/CMakeFiles/picotoolBuild.rule"
+		},
+		{
+			"file" : "F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/CMakeFiles/picotoolBuild-complete.rule"
+		},
+		{
+			"file" : "F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/picotool/src/picotoolBuild-stamp/picotoolBuild-build.rule"
+		},
+		{
+			"file" : "F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/picotool/src/picotoolBuild-stamp/picotoolBuild-configure.rule"
+		},
+		{
+			"file" : "F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/picotool/src/picotoolBuild-stamp/picotoolBuild-download.rule"
+		},
+		{
+			"file" : "F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/picotool/src/picotoolBuild-stamp/picotoolBuild-install.rule"
+		},
+		{
+			"file" : "F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/picotool/src/picotoolBuild-stamp/picotoolBuild-mkdir.rule"
+		},
+		{
+			"file" : "F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/picotool/src/picotoolBuild-stamp/picotoolBuild-patch.rule"
+		},
+		{
+			"file" : "F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/picotool/src/picotoolBuild-stamp/picotoolBuild-test.rule"
+		},
+		{
+			"file" : "F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/picotool/src/picotoolBuild-stamp/picotoolBuild-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"picotoolBuild"
+		],
+		"name" : "picotoolBuild"
+	}
+}

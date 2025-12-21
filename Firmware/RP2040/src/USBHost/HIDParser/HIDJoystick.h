@@ -70,6 +70,11 @@ public:
     int16_t Slider; //-32768 to 32767
     int16_t Dial; //-32768 to 32767
 
+    // Accelerometer data (for PS3 guitar tilt sensor)
+    int16_t accel_x;  // 10-bit accelerometer X axis (0-1023, ~512 center)
+    int16_t accel_y;  // 10-bit accelerometer Y axis
+    int16_t accel_z;  // 10-bit accelerometer Z axis
+
     HIDJoystickHatSwitch hat_switch;
 
     uint8_t button_count;

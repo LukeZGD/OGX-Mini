@@ -1,0 +1,2 @@
+F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/_deps/picotool-build/enc_bootloader/CMakeFiles/edit_cache.dir
+F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/_deps/picotool-build/enc_bootloader/CMakeFiles/rebuild_cache.dir

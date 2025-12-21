@@ -62,9 +62,11 @@ set(SOURCES_BOARD
     ${SRC}/USBDevice/DeviceDriver/DeviceDriver.cpp
     ${SRC}/USBDevice/DeviceDriver/PSClassic/PSClassic.cpp
     ${SRC}/USBDevice/DeviceDriver/PS3/PS3.cpp
+    ${SRC}/USBDevice/DeviceDriver/DS4/DS4.cpp
     ${SRC}/USBDevice/DeviceDriver/Switch/Switch.cpp
     ${SRC}/USBDevice/DeviceDriver/XInput/XInput.cpp
     ${SRC}/USBDevice/DeviceDriver/XInput/XInputGuitar.cpp
+    ${SRC}/USBDevice/DeviceDriver/XInput/XInputGuitar360.cpp
     ${SRC}/USBDevice/DeviceDriver/XboxOG/XboxOG_GP.cpp
     ${SRC}/USBDevice/DeviceDriver/XboxOG/XboxOG_SB.cpp
     ${SRC}/USBDevice/DeviceDriver/XboxOG/XboxOG_XR.cpp

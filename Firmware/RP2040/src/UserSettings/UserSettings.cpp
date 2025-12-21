@@ -23,6 +23,8 @@ static constexpr uint32_t XINPUT =
     BUTTON_COMBO(Gamepad::BUTTON_START, Gamepad::DPAD_UP);
 static constexpr uint32_t XINPUT_GUITAR =
     BUTTON_COMBO(Gamepad::BUTTON_START | Gamepad::BUTTON_A, Gamepad::DPAD_UP);
+static constexpr uint32_t XINPUT_GUITAR_360 =
+    BUTTON_COMBO(Gamepad::BUTTON_START | Gamepad::BUTTON_B, Gamepad::DPAD_UP);
 static constexpr uint32_t SWITCH =
     BUTTON_COMBO(Gamepad::BUTTON_START, Gamepad::DPAD_DOWN);
 static constexpr uint32_t XBOXOG =
@@ -33,34 +35,45 @@ static constexpr uint32_t XBOXOG_XR = BUTTON_COMBO(
     Gamepad::BUTTON_START | Gamepad::BUTTON_LB, Gamepad::DPAD_RIGHT);
 static constexpr uint32_t PSCLASSIC =
     BUTTON_COMBO(Gamepad::BUTTON_START | Gamepad::BUTTON_A);
+static constexpr uint32_t DS4 =
+    BUTTON_COMBO(Gamepad::BUTTON_START | Gamepad::BUTTON_A, Gamepad::DPAD_LEFT);
 static constexpr uint32_t WEBAPP = BUTTON_COMBO(
     Gamepad::BUTTON_START | Gamepad::BUTTON_LB | Gamepad::BUTTON_RB);
 }; // namespace ButtonCombo
 
 static constexpr DeviceDriverType VALID_DRIVER_TYPES[] = {
 #if defined(CONFIG_EN_4CH)
-    DeviceDriverType::XBOXOG,    DeviceDriverType::XBOXOG_SB,
-    DeviceDriverType::XINPUT,    DeviceDriverType::PS3,
-    DeviceDriverType::PSCLASSIC, DeviceDriverType::WEBAPP,
-#if defined(XREMOTE_ROM_AVAILABLE)
+    DeviceDriverType::XINPUT_GUITAR_360,
+    DeviceDriverType::XINPUT_GUITAR,
+    DeviceDriverType::XINPUT,
+    DeviceDriverType::PS3,
+    DeviceDriverType::DS4,
+    DeviceDriverType::PSCLASSIC,
+    DeviceDriverType::WEBAPP,
+    DeviceDriverType::XBOXOG,
+    DeviceDriverType::XBOXOG_SB,
     DeviceDriverType::XBOXOG_XR,
-#endif
-
-#elif MAX_GAMEPADS > 1
     DeviceDriverType::DINPUT,
     DeviceDriverType::SWITCH,
-    DeviceDriverType::WEBAPP,
-
-#else // MAX_GAMEPADS == 1
-    DeviceDriverType::XBOXOG,        DeviceDriverType::XBOXOG_SB,
-    DeviceDriverType::DINPUT,        DeviceDriverType::SWITCH,
-    DeviceDriverType::WEBAPP,        DeviceDriverType::PS3,
-    DeviceDriverType::PSCLASSIC,     DeviceDriverType::XINPUT,
-    DeviceDriverType::XINPUT_GUITAR,
 #if defined(XREMOTE_ROM_AVAILABLE)
     DeviceDriverType::XBOXOG_XR,
 #endif
-
+#else // MAX_GAMEPADS == 1
+    DeviceDriverType::XINPUT_GUITAR_360,
+    DeviceDriverType::XINPUT_GUITAR,
+    DeviceDriverType::XINPUT,
+    DeviceDriverType::PS3,
+    DeviceDriverType::DS4,
+    DeviceDriverType::PSCLASSIC,
+    DeviceDriverType::WEBAPP,
+    DeviceDriverType::XBOXOG,
+    DeviceDriverType::XBOXOG_SB,
+    DeviceDriverType::XBOXOG_XR,
+    DeviceDriverType::DINPUT,
+    DeviceDriverType::SWITCH,
+#if defined(XREMOTE_ROM_AVAILABLE)
+    DeviceDriverType::XBOXOG_XR,
+#endif
 #endif
 };
 
@@ -69,7 +82,7 @@ struct ComboMap {
   DeviceDriverType driver;
 };
 
-static constexpr std::array<ComboMap, 10> BUTTON_COMBO_MAP = {
+static constexpr std::array<ComboMap, 12> BUTTON_COMBO_MAP = {
     {{ButtonCombo::XBOXOG, DeviceDriverType::XBOXOG},
      {ButtonCombo::XBOXOG_SB, DeviceDriverType::XBOXOG_SB},
      {ButtonCombo::XBOXOG_XR, DeviceDriverType::XBOXOG_XR},
@@ -77,8 +90,10 @@ static constexpr std::array<ComboMap, 10> BUTTON_COMBO_MAP = {
      {ButtonCombo::DINPUT, DeviceDriverType::DINPUT},
      {ButtonCombo::SWITCH, DeviceDriverType::SWITCH},
      {ButtonCombo::XINPUT_GUITAR, DeviceDriverType::XINPUT_GUITAR},
+     {ButtonCombo::XINPUT_GUITAR_360, DeviceDriverType::XINPUT_GUITAR_360},
      {ButtonCombo::XINPUT, DeviceDriverType::XINPUT},
      {ButtonCombo::PS3, DeviceDriverType::PS3},
+     {ButtonCombo::DS4, DeviceDriverType::DS4},
      {ButtonCombo::PSCLASSIC, DeviceDriverType::PSCLASSIC}}};
 
 const std::string UserSettings::INIT_FLAG_KEY() {

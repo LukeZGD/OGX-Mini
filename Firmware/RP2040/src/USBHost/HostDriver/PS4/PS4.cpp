@@ -18,7 +18,7 @@ void PS4Host::initialize(Gamepad& gamepad, uint8_t address, uint8_t instance, co
 void PS4Host::process_report(Gamepad& gamepad, uint8_t address, uint8_t instance, const uint8_t* report, uint16_t len)
 {
     std::memcpy(&in_report_, report, std::min(static_cast<size_t>(len), sizeof(PS4::InReport)));
-    in_report_.buttons[2] &= PS4::COUNTER_MASK;
+    in_report_.buttons2 &= PS4::COUNTER_MASK;
     if (std::memcmp(reinterpret_cast<const PS4::InReport*>(report), &prev_in_report_, sizeof(PS4::InReport)) == 0)
     {
         return;
@@ -26,7 +26,7 @@ void PS4Host::process_report(Gamepad& gamepad, uint8_t address, uint8_t instance
 
     Gamepad::PadIn gp_in;   
 
-    switch (in_report_.buttons[0] & PS4::DPAD_MASK)
+    switch (in_report_.buttons0 & PS4::DPAD_MASK)
     {
         case PS4::Buttons0::DPAD_UP:
             gp_in.dpad |= gamepad.MAP_DPAD_UP;
@@ -56,18 +56,18 @@ void PS4Host::process_report(Gamepad& gamepad, uint8_t address, uint8_t instance
             break;
     }
 
-    if (in_report_.buttons[0] & PS4::Buttons0::SQUARE)   gp_in.buttons |= gamepad.MAP_BUTTON_X;
-    if (in_report_.buttons[0] & PS4::Buttons0::CROSS)    gp_in.buttons |= gamepad.MAP_BUTTON_A;
-    if (in_report_.buttons[0] & PS4::Buttons0::CIRCLE)   gp_in.buttons |= gamepad.MAP_BUTTON_B;
-    if (in_report_.buttons[0] & PS4::Buttons0::TRIANGLE) gp_in.buttons |= gamepad.MAP_BUTTON_Y; 
-    if (in_report_.buttons[1] & PS4::Buttons1::L1)       gp_in.buttons |= gamepad.MAP_BUTTON_LB;
-    if (in_report_.buttons[1] & PS4::Buttons1::R1)       gp_in.buttons |= gamepad.MAP_BUTTON_RB;
-    if (in_report_.buttons[1] & PS4::Buttons1::L3)       gp_in.buttons |= gamepad.MAP_BUTTON_L3;
-    if (in_report_.buttons[1] & PS4::Buttons1::R3)       gp_in.buttons |= gamepad.MAP_BUTTON_R3;
-    if (in_report_.buttons[1] & PS4::Buttons1::SHARE)    gp_in.buttons |= gamepad.MAP_BUTTON_BACK;
-    if (in_report_.buttons[1] & PS4::Buttons1::OPTIONS)  gp_in.buttons |= gamepad.MAP_BUTTON_START;
-    if (in_report_.buttons[2] & PS4::Buttons2::PS)       gp_in.buttons |= gamepad.MAP_BUTTON_SYS;
-    if (in_report_.buttons[2] & PS4::Buttons2::TP)       gp_in.buttons |= gamepad.MAP_BUTTON_MISC;
+    if (in_report_.buttons0 & PS4::Buttons0::SQUARE)   gp_in.buttons |= gamepad.MAP_BUTTON_X;
+    if (in_report_.buttons0 & PS4::Buttons0::CROSS)    gp_in.buttons |= gamepad.MAP_BUTTON_A;
+    if (in_report_.buttons0 & PS4::Buttons0::CIRCLE)   gp_in.buttons |= gamepad.MAP_BUTTON_B;
+    if (in_report_.buttons0 & PS4::Buttons0::TRIANGLE) gp_in.buttons |= gamepad.MAP_BUTTON_Y; 
+    if (in_report_.buttons1 & PS4::Buttons1::L1)       gp_in.buttons |= gamepad.MAP_BUTTON_LB;
+    if (in_report_.buttons1 & PS4::Buttons1::R1)       gp_in.buttons |= gamepad.MAP_BUTTON_RB;
+    if (in_report_.buttons1 & PS4::Buttons1::L3)       gp_in.buttons |= gamepad.MAP_BUTTON_L3;
+    if (in_report_.buttons1 & PS4::Buttons1::R3)       gp_in.buttons |= gamepad.MAP_BUTTON_R3;
+    if (in_report_.buttons1 & PS4::Buttons1::SHARE)    gp_in.buttons |= gamepad.MAP_BUTTON_BACK;
+    if (in_report_.buttons1 & PS4::Buttons1::OPTIONS)  gp_in.buttons |= gamepad.MAP_BUTTON_START;
+    if (in_report_.buttons2 & PS4::Buttons2::PS)       gp_in.buttons |= gamepad.MAP_BUTTON_SYS;
+    if (in_report_.buttons2 & PS4::Buttons2::TP)       gp_in.buttons |= gamepad.MAP_BUTTON_MISC;
 
     gp_in.trigger_l = gamepad.scale_trigger_l(in_report_.trigger_l);
     gp_in.trigger_r = gamepad.scale_trigger_r(in_report_.trigger_r);
