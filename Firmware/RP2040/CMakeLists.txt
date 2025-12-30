@@ -62,6 +62,7 @@ set(SOURCES_BOARD
     ${SRC}/USBDevice/DeviceDriver/DeviceDriver.cpp
     ${SRC}/USBDevice/DeviceDriver/PSClassic/PSClassic.cpp
     ${SRC}/USBDevice/DeviceDriver/PS3/PS3.cpp
+
     ${SRC}/USBDevice/DeviceDriver/DS4/DS4.cpp
     ${SRC}/USBDevice/DeviceDriver/Switch/Switch.cpp
     ${SRC}/USBDevice/DeviceDriver/XInput/XInput.cpp
@@ -189,6 +190,7 @@ if(EN_USB_HOST)
         ${SRC}/USBHost/HostDriver/PS5/PS5.cpp
         ${SRC}/USBHost/HostDriver/PS4/PS4.cpp
         ${SRC}/USBHost/HostDriver/PS3/PS3.cpp
+        ${SRC}/USBHost/HostDriver/PS3V2/PS3V2.cpp
         ${SRC}/USBHost/HostDriver/N64/N64.cpp
         ${SRC}/USBHost/HostDriver/HIDGeneric/HIDGeneric.cpp
 

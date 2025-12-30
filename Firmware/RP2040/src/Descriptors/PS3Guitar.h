@@ -4,63 +4,50 @@
 
 namespace PS3Guitar {
 // PS3 Guitar Hero Controller Report
-// Based on community reverse engineering and comparison with DualShock 3
+// Based on Linux HID descriptor capture and raw report analysis
+// Report size: 27 bytes (without Report ID) or 28 bytes (with Report ID)
+// 
+// HID Descriptor parsed from Linux:
+// - 13 buttons + 3 padding (2 bytes)
+// - 4-bit HAT switch + 4-bit padding (1 byte)  
+// - 4x 8-bit joystick axes (4 bytes)
+// - 12x vendor-defined bytes (12 bytes)
+// - 4x 16-bit accelerometer/gyro (8 bytes, Little Endian, 0-1023 range)
+//
+// Raw data verified:
+// Repouso:   Accel X = 455 (0x01C7)
+// Levantada: Accel X = 388 (0x0184)
+
 struct InReport {
-  uint8_t report_id; // Byte 0: Often 0x01
-
-  // Byte 1: Buttons and D-Pad (Standard PS3 mapping)
-  // Bit 0: Select
-  // Bit 1: L3
-  // Bit 2: R3
-  // Bit 3: Start
-  // Bit 4: D-Pad Up (Strum Up)
-  // Bit 5: D-Pad Right
-  // Bit 6: D-Pad Down (Strum Down)
-  // Bit 7: D-Pad Left
+  // Bytes 0-1: Buttons (13 buttons + 3 padding bits)
+  // buttons0: Select, L3, R3, Start, DPad Up, DPad Right, DPad Down, DPad Left
+  // buttons1: L2, R2, Orange(L1), R1, Yellow(△), Red(○), Blue(×), Green(□)
   uint8_t buttons0;
-
-  // Byte 2: More Buttons
-  // Bit 0: L2
-  // Bit 1: R2
-  // Bit 2: L1 (Orange Fret)
-  // Bit 3: R1
-  // Bit 4: Triangle (Yellow Fret)
-  // Bit 5: Circle (Red Fret)
-  // Bit 6: Cross (Blue Fret - Note: swapped vs standard controller color)
-  // Bit 7: Square (Green Fret)
   uint8_t buttons1;
 
-  // Byte 3: PS Button / Reserved
+  // Byte 2: D-Pad HAT (lower 4 bits) + PS button and padding (upper 4 bits)
+  // HAT: 0=N, 1=NE, 2=E, 3=SE, 4=S, 5=SW, 6=W, 7=NW, 0x0F=center
   uint8_t buttons2;
 
-  // Byte 4: Reserved
-  uint8_t reserved0;
+  // Bytes 3-6: Joystick axes (0-255, center=128)
+  uint8_t joystick_lx;  // Byte 3
+  uint8_t joystick_ly;  // Byte 4
+  uint8_t joystick_rx;  // Byte 5 - Whammy Bar
+  uint8_t joystick_ry;  // Byte 6
 
-  // Byte 5: Joystick LX (Analog Stick X)
-  uint8_t joystick_lx;
+  // Bytes 7-18: Vendor-defined data (12 bytes)
+  uint8_t vendor_data[12];
 
-  // Byte 6: Joystick LY (Analog Stick Y)
-  uint8_t joystick_ly;
-
-  // Byte 7: Joystick RX (Whammy Bar usually here or Z-axis)
-  uint8_t joystick_rx;
-
-  // Byte 8: Joystick RY
-  uint8_t joystick_ry;
-
-  // Bytes 9-40: Pressure sensitive buttons and other data
-  uint8_t reserved1[32];
-
-  // Bytes 41-50: Motion Sensors (Big Endian)
-  // 41-42: Accel X (Tilt)
-  // 43-44: Accel Y
-  // 45-46: Accel Z
-  // 47-48: Gyro Z
-  uint16_t accel_x; // Bytes 41-42 (Index 41 in 0-based array)
-  uint16_t accel_y;
-  uint16_t accel_z;
-  uint16_t gyro_z;
+  // Bytes 19-26: Motion sensors (16-bit Little Endian, 0-1023 range)
+  // Tilt detection: accel_x decreases when guitar is raised
+  // Normal ~455, Tilted ~388
+  uint16_t accel_x;  // Bytes 19-20 - TILT SENSOR
+  uint16_t accel_y;  // Bytes 21-22
+  uint16_t accel_z;  // Bytes 23-24
+  uint16_t gyro_z;   // Bytes 25-26
 } __attribute__((packed));
+
+static_assert(sizeof(InReport) == 27, "PS3Guitar::InReport must be 27 bytes");
 
 struct Buttons0 {
   static const uint8_t SELECT = 0x01;

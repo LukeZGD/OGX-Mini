@@ -4,10 +4,12 @@
 #include "USBDevice/DeviceDriver/DInput/DInput.h"
 #include "USBDevice/DeviceDriver/DS4/DS4.h"
 #include "USBDevice/DeviceDriver/PS3/PS3.h"
+
 #include "USBDevice/DeviceDriver/PSClassic/PSClassic.h"
 #include "USBDevice/DeviceDriver/Switch/Switch.h"
 #include "USBDevice/DeviceDriver/WebApp/WebApp.h"
 #include "USBDevice/DeviceDriver/XInput/XInput.h"
+
 #include "USBDevice/DeviceDriver/XInput/XInputGuitar360.h"
 #include "USBDevice/DeviceDriver/XboxOG/XboxOG_GP.h"
 #include "USBDevice/DeviceDriver/XboxOG/XboxOG_SB.h"
@@ -32,6 +34,7 @@ void DeviceManager::initialize_driver(DeviceDriverType driver_type,
     has_analog = true;
     device_driver_ = std::make_unique<PS3Device>();
     break;
+
   case DeviceDriverType::DS4:
     has_analog = true;
     device_driver_ = std::make_unique<DS4Device>();
@@ -48,6 +51,7 @@ void DeviceManager::initialize_driver(DeviceDriverType driver_type,
   case DeviceDriverType::XINPUT_GUITAR_360:
     device_driver_ = std::make_unique<XInputGuitar360Device>();
     break;
+
   case DeviceDriverType::XBOXOG:
     has_analog = true;
     device_driver_ = std::make_unique<XboxOGDevice>();

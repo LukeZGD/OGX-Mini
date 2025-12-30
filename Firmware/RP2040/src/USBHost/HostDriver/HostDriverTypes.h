@@ -10,6 +10,7 @@ enum class HostDriverType {
   PSCLASSIC,
   DINPUT,
   PS3,
+  PS3V2,
   PS4,
   PS5,
   N64,

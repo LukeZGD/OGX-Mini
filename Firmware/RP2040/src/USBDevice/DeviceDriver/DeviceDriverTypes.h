@@ -9,8 +9,9 @@ enum class DeviceDriverType : uint8_t {
   XBOXOG_SB,
   XBOXOG_XR,
   XINPUT,
-  XINPUT_GUITAR_360,
+  XINPUT_GUITAR_360, // Authentic Guitar 360 Rock Band
   PS3,
+
   DS4, // Authentic DualShock 4 (VID: 054C, PID: 09CC)
   DINPUT,
   PSCLASSIC,

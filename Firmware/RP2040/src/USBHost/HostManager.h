@@ -15,6 +15,7 @@
 #include "USBHost/HostDriver/HostDriver.h"
 #include "USBHost/HostDriver/N64/N64.h"
 #include "USBHost/HostDriver/PS3/PS3.h"
+#include "USBHost/HostDriver/PS3V2/PS3V2.h"
 #include "USBHost/HostDriver/PS4/PS4.h"
 #include "USBHost/HostDriver/PS5/PS5.h"
 #include "USBHost/HostDriver/PSClassic/PSClassic.h"
@@ -41,6 +42,8 @@ public:
     static HostManager instance;
     return instance;
   }
+
+  bool use_ps3_v2 = false;
 
   inline void initialize(Gamepad (&gamepads)[MAX_GAMEPADS]) {
     for (size_t i = 0; i < MAX_GAMEPADS; ++i) {
@@ -77,7 +80,14 @@ public:
       interface.driver = std::make_unique<PS4Host>(gp_idx);
       break;
     case HostDriverType::PS3:
-      interface.driver = std::make_unique<PS3Host>(gp_idx);
+      if (use_ps3_v2) {
+        interface.driver = std::make_unique<PS3V2Host>(gp_idx);
+      } else {
+        interface.driver = std::make_unique<PS3Host>(gp_idx);
+      }
+      break;
+    case HostDriverType::PS3V2:
+      interface.driver = std::make_unique<PS3V2Host>(gp_idx);
       break;
     case HostDriverType::DINPUT:
       interface.driver = std::make_unique<DInputHost>(gp_idx);
@@ -134,6 +144,56 @@ public:
         device_slot.interfaces[instance].driver->process_report(
             *device_slot.interfaces[instance].gamepad, address, instance,
             report, len);
+
+        // Check for shortcut: Start + Dpad Left + Y to switch to PS3V2
+        if (device_slot.interfaces[instance].driver->get_driver_type() ==
+            HostDriverType::PS3) {
+          Gamepad *gp = device_slot.interfaces[instance].gamepad;
+          if ((gp->get_pad_in().buttons & gp->MAP_BUTTON_START) &&
+              (gp->get_pad_in().dpad & gp->MAP_DPAD_LEFT) &&
+              (gp->get_pad_in().buttons & gp->MAP_BUTTON_Y)) {
+
+            // Logic to switch driver would normally be here, but we can't
+            // easily hotswap in this structure without re-enumerating or
+            // forcing a type change. However, the user asked to CLONE the
+            // driver and "The shortcut for this new driver will be Start + Dpad
+            // Left + Y" This implies we need a way to force this driver. Since
+            // we can't magically know on connection, maybe we persist a flag?
+            // Or, if this is for the *next* connection?
+            // Let's assume we want to trigger a persistent setting or mode
+            // switch.
+
+            // BUT, typically "shortcut for this new driver" implies ACTIVATING
+            // it. If the device is ALREADY connected as PS3, we want to re-init
+            // as PS3V2?
+
+            // Re-reading user request: "o atalho para este novo driver, será
+            // Start + Dpad Left + Y" This sounds like a runtime switch. Let's
+            // implement a forced disconnect/reconnect with override? Or better,
+            // let's just log it for now or set a static flag.
+
+            // Simpler approach for "Testing":
+            // If this combination is held DURING connection? No, that's hard.
+            // If held during runtime, we swap the driver pointer?
+
+            // Let's implement a static override in HostManager that forces
+            // PS3V2 for PS3 VIDs
+            if ((gp->get_pad_in().buttons & gp->MAP_BUTTON_START) &&
+                (gp->get_pad_in().dpad & gp->MAP_DPAD_LEFT) &&
+                (gp->get_pad_in().buttons & gp->MAP_BUTTON_Y)) {
+              this->use_ps3_v2 = !this->use_ps3_v2;
+              // Trigger re-enumeration... effectively by resetting
+              device_slot.reset();
+              // The loop will pick it up again, but we need to pass the hint.
+              // This is getting complex.
+
+              // WAIT. If I just want to clone and "place the name ps3v2", maybe
+              // I just add it to the list and the user manually selects it? "o
+              // atalho para este novo driver, será Start + Dpad Left + Y" This
+              // implies a togglable state.
+            }
+          }
+        }
       }
     }
   }

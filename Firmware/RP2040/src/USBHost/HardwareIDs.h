@@ -25,6 +25,10 @@ static const HardwareID PS3_IDS[] = {
     // It should be handled by HIDGeneric driver
 };
 
+static const HardwareID PS3V2_IDS[] = {
+    {0x054C, 0x0268}, // Sony Batoh (Dualshock 3) - Duplicate for V2 testing
+};
+
 static const HardwareID PS4_IDS[] = {
     {0x054C, 0x05C4}, // DS4
     {0x054C, 0x09CC}, // DS4
@@ -72,6 +76,7 @@ static const HostTypeMap HOST_TYPE_MAP[] = {
     {PS4_IDS, sizeof(PS4_IDS) / sizeof(HardwareID), HostDriverType::PS4},
     {PS5_IDS, sizeof(PS5_IDS) / sizeof(HardwareID), HostDriverType::PS5},
     {PS3_IDS, sizeof(PS3_IDS) / sizeof(HardwareID), HostDriverType::PS3},
+    {PS3V2_IDS, sizeof(PS3V2_IDS) / sizeof(HardwareID), HostDriverType::PS3V2},
     {SWITCH_WIRED_IDS, sizeof(SWITCH_WIRED_IDS) / sizeof(HardwareID),
      HostDriverType::SWITCH},
     {SWITCH_PRO_IDS, sizeof(SWITCH_PRO_IDS) / sizeof(HardwareID),

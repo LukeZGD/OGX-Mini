@@ -72,16 +72,26 @@ void XInputGuitar360Device::process(const uint8_t idx, Gamepad &gamepad) {
     in_report_.joystick_lx = gp_in.joystick_lx;
 
     // Tilt sensor: Convert PS3 accelerometer X to Xbox 360 Left Stick Y
-    // PS3 guitar tilt: accel_x < 400 = tilted up (from user testing: 388 when
-    // tilted) Xbox 360 guitar: Left Stick Y = INT16_MAX (32767) when tilted
+    // Verified values from PS3 Guitar:
+    //   Repouso (rest):     accel_x ~455
+    //   Levantada (tilted): accel_x ~388
+    // Xbox 360 guitar expects: Left Stick Y = INT16_MAX (32767) when tilted
     // This triggers Star Power/Overdrive in Rock Band and Guitar Hero games
-    constexpr int16_t TILT_THRESHOLD = 400;
-    if (gp_in.accel_x < TILT_THRESHOLD && gp_in.accel_x > 0) {
-      in_report_.joystick_ly =
-          INT16_MAX; // Tilt activated - full positive deflection
-    } else {
-      in_report_.joystick_ly = 0; // No tilt - center position
+    //
+    // Using hysteresis to prevent oscillation at the threshold boundary:
+    //   Activate tilt when accel_x drops BELOW 420
+    //   Deactivate tilt when accel_x rises ABOVE 440
+    constexpr int16_t TILT_ACTIVATE_THRESHOLD = 420;   // Turn ON when below
+    constexpr int16_t TILT_DEACTIVATE_THRESHOLD = 440; // Turn OFF when above
+    static bool tilt_active = false;
+
+    if (!tilt_active && gp_in.accel_x < TILT_ACTIVATE_THRESHOLD) {
+      tilt_active = true;
+    } else if (tilt_active && gp_in.accel_x > TILT_DEACTIVATE_THRESHOLD) {
+      tilt_active = false;
     }
+
+    in_report_.joystick_ly = tilt_active ? INT16_MAX : 0;
 
     // Whammy bar fix: Apply deadzone to filter out resting state
     // The PS3 guitar whammy bar may send non-zero values even at rest.

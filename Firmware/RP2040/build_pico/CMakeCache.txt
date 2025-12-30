@@ -239,6 +239,9 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 //The CMake toolchain file
 CMAKE_TOOLCHAIN_FILE:FILEPATH=F:/GitRevised/OGX-Mini/Firmware/external/pico-sdk/cmake/preload/toolchains/pico_arm_cortex_m0plus_gcc.cmake
 
+//No help, variable specified on the command line.
+CMAKE_TRY_COMPILE_TARGET_TYPE:UNINITIALIZED=STATIC_LIBRARY
+
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console
 // during the make.  This is useful for debugging only. With Visual
