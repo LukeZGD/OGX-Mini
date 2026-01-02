@@ -74,14 +74,29 @@ void HIDHost::process_report(Gamepad &gamepad, uint8_t address,
   std::tie(gp_in.joystick_rx, gp_in.joystick_ry) =
       gamepad.scale_joystick_r(hid_joystick_data_.Z, hid_joystick_data_.Rz);
 
-  if (hid_joystick_data_.buttons[1])
-    gp_in.buttons |= gamepad.MAP_BUTTON_X;
-  if (hid_joystick_data_.buttons[2])
-    gp_in.buttons |= gamepad.MAP_BUTTON_A;
-  if (hid_joystick_data_.buttons[3])
-    gp_in.buttons |= gamepad.MAP_BUTTON_B;
-  if (hid_joystick_data_.buttons[4])
-    gp_in.buttons |= gamepad.MAP_BUTTON_Y;
+  if (report_desc_len_ == 176) {
+    // PS2->PS3 Adapter special mapping
+    // User reported: Tri->Squ(X), Squ->Tri(Y), Cir->Cross(A), Cross->Cir(B)
+    // with default mapping. Fixed mapping:
+    if (hid_joystick_data_.buttons[1])
+      gp_in.buttons |= gamepad.MAP_BUTTON_Y; // Triangle
+    if (hid_joystick_data_.buttons[2])
+      gp_in.buttons |= gamepad.MAP_BUTTON_B; // Circle
+    if (hid_joystick_data_.buttons[3])
+      gp_in.buttons |= gamepad.MAP_BUTTON_A; // Cross
+    if (hid_joystick_data_.buttons[4])
+      gp_in.buttons |= gamepad.MAP_BUTTON_X; // Square
+  } else {
+    // Standard Generic Mapping
+    if (hid_joystick_data_.buttons[1])
+      gp_in.buttons |= gamepad.MAP_BUTTON_X;
+    if (hid_joystick_data_.buttons[2])
+      gp_in.buttons |= gamepad.MAP_BUTTON_A;
+    if (hid_joystick_data_.buttons[3])
+      gp_in.buttons |= gamepad.MAP_BUTTON_B;
+    if (hid_joystick_data_.buttons[4])
+      gp_in.buttons |= gamepad.MAP_BUTTON_Y;
+  }
   if (hid_joystick_data_.buttons[5])
     gp_in.buttons |= gamepad.MAP_BUTTON_LB;
   if (hid_joystick_data_.buttons[6])
@@ -119,5 +134,7 @@ void HIDHost::process_report(Gamepad &gamepad, uint8_t address,
 
 bool HIDHost::send_feedback(Gamepad &gamepad, uint8_t address,
                             uint8_t instance) {
+  // Power Saving: Vibration disabled by user request to prevent disconnects.
+  // Adapter demands 500mA which exceeds available power when cascaded.
   return true;
 }

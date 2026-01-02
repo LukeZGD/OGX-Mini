@@ -80,7 +80,10 @@ public:
       interface.driver = std::make_unique<PS4Host>(gp_idx);
       break;
     case HostDriverType::PS3:
-      if (use_ps3_v2) {
+      // PS2->PS3 Adapters mimic PS3 VID/PID but have different report descriptor length (176 vs 148)
+      if (desc_len == 176) {
+        interface.driver = std::make_unique<HIDHost>(gp_idx);
+      } else if (use_ps3_v2) {
         interface.driver = std::make_unique<PS3V2Host>(gp_idx);
       } else {
         interface.driver = std::make_unique<PS3Host>(gp_idx);
