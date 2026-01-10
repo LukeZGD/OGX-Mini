@@ -42,41 +42,8 @@ static constexpr uint32_t WEBAPP = BUTTON_COMBO(
 }; // namespace ButtonCombo
 
 static constexpr DeviceDriverType VALID_DRIVER_TYPES[] = {
-#if defined(CONFIG_EN_4CH)
-    DeviceDriverType::XINPUT_GUITAR_360,
-
-    DeviceDriverType::XINPUT,
     DeviceDriverType::PS3,
-
     DeviceDriverType::DS4,
-    DeviceDriverType::PSCLASSIC,
-    DeviceDriverType::WEBAPP,
-    DeviceDriverType::XBOXOG,
-    DeviceDriverType::XBOXOG_SB,
-    DeviceDriverType::XBOXOG_XR,
-    DeviceDriverType::DINPUT,
-    DeviceDriverType::SWITCH,
-#if defined(XREMOTE_ROM_AVAILABLE)
-    DeviceDriverType::XBOXOG_XR,
-#endif
-#else // MAX_GAMEPADS == 1
-    DeviceDriverType::XINPUT_GUITAR_360,
-
-    DeviceDriverType::XINPUT,
-    DeviceDriverType::PS3,
-
-    DeviceDriverType::DS4,
-    DeviceDriverType::PSCLASSIC,
-    DeviceDriverType::WEBAPP,
-    DeviceDriverType::XBOXOG,
-    DeviceDriverType::XBOXOG_SB,
-    DeviceDriverType::XBOXOG_XR,
-    DeviceDriverType::DINPUT,
-    DeviceDriverType::SWITCH,
-#if defined(XREMOTE_ROM_AVAILABLE)
-    DeviceDriverType::XBOXOG_XR,
-#endif
-#endif
 };
 
 struct ComboMap {
@@ -278,24 +245,6 @@ bool UserSettings::is_valid_driver(DeviceDriverType driver) {
 }
 
 DeviceDriverType UserSettings::get_current_driver() {
-  if (current_driver_ != DeviceDriverType::NONE) {
-    return current_driver_;
-  }
-
-  uint8_t stored_value = 0;
-  nvs_tool_.read(DRIVER_TYPE_KEY(), &stored_value, sizeof(uint8_t));
-
-  if (is_valid_driver(static_cast<DeviceDriverType>(stored_value))) {
-    OGXM_LOG("Driver type read from flash: " +
-             OGXM_TO_STRING(static_cast<DeviceDriverType>(stored_value)) +
-             "\n");
-
-    current_driver_ = static_cast<DeviceDriverType>(stored_value);
-    return current_driver_;
-  }
-
-  OGXM_LOG("Invalid driver type read from flash, setting default driver\n");
-
   current_driver_ = DEFAULT_DRIVER();
   return current_driver_;
 }
