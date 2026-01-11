@@ -1,7 +1,0 @@
-F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/_deps/picotool/picotool.exe
-F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/_deps/picotool/picotoolTargets.cmake
-F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/_deps/picotool/picotoolTargets-release.cmake
-F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/_deps/picotool/picotoolConfig.cmake
-F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/_deps/picotool/picotoolConfigVersion.cmake
-F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/_deps/picotool/enc_bootloader.elf
-F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/_deps/picotool/enc_bootloader_mbedtls.elf

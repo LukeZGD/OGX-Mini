@@ -1,3 +1,0 @@
-F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/_deps/picotool-subbuild/CMakeFiles/picotool-populate.dir
-F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/_deps/picotool-subbuild/CMakeFiles/edit_cache.dir
-F:/GitRevised/OGX-Mini/Firmware/RP2040/build_pico/_deps/picotool-subbuild/CMakeFiles/rebuild_cache.dir
